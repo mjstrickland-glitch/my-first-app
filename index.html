@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My App</title>
+</head>
+<body style="font-family: Arial; text-align: center;">
+
+<h1>🌟 My Daily Tasks</h1>
+
+<input id="taskInput" placeholder="Type a task..." style="padding:10px;">
+<button onclick="addTask()" style="padding:10px;">Add</button>
+
+<ul id="taskList" style="list-style:none;"></ul>
+
+<script>
+window.onload = function() {
+  let saved = JSON.parse(localStorage.getItem("tasks")) || [];
+  saved.forEach(task => createTask(task));
+};
+
+function addTask() {
+  let input = document.getElementById("taskInput");
+  let task = input.value;
+
+  if (task === "") return;
+
+  createTask(task);
+
+  let saved = JSON.parse(localStorage.getItem("tasks")) || [];
+  saved.push(task);
+  localStorage.setItem("tasks", JSON.stringify(saved));
+
+  input.value = "";
+}
+
+function createTask(task) {
+  let li = document.createElement("li");
+  li.textContent = task;
+
+  li.onclick = function() {
+    li.style.textDecoration = "line-through";
+  };
+
+  document.getElementById("taskList").appendChild(li);
+}
+</script>
+
+</body>
+</html>
